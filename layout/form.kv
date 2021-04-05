@@ -1,0 +1,80 @@
+#:kivy 1.11.0
+
+<modelButton>:
+
+<CalcGridLayout>:
+    id: calculator
+    rows: 5
+    padding: 0
+    spacing: 0
+    ActionBar:
+        pos_hint: {'top':1}
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'Demostración YOLO V5'
+                app_icon_width: 0%
+                app_icon_width: 1
+                app_icon_height: 1
+                with_previous: False
+            ActionOverflow:
+            ActionGroup:
+                text: '                           Modelo                           '
+                mode: 'spinner'
+                ActionButton:
+                    text: 'SVHN 100 epoch'
+                    halign: 'center'
+                    on_press: root.change_weight(0)
+                ActionButton:
+                    text: 'SVHN 1000 epoch'
+                    halign: 'center'
+                    on_press: root.change_weight(1)
+                ActionButton:
+                    text: 'UNO numbers'
+                    halign: 'center'
+                    on_press: root.change_weight(2)
+                ActionButton:
+                    text: 'SVHN 1000 epoch Augmented'
+                    halign: 'center'
+                    on_press: root.change_weight(3)
+
+    BoxLayout:
+        FloatLayout:
+            id: float_canvas
+            size_hint: None, None
+            size: self.parent.size[0],self.parent.size[1]
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            Image:
+                size_hint: None, None
+                size: self.parent.size[0],self.parent.size[1]
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                id: img
+            Label:
+                id:model_label
+                text_size: self.size
+                size_hint: None, None
+                size: self.parent.size[0],self.parent.size[1]
+                color: 1,0,0,1
+                pos_hint: {'x': 0.01, 'y':0.05 }
+            Label:
+                id: message_label
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+                color: 0,0,0,1
+                text: 'Arrastra y suelta una imagen'
+                size_hint: None, None
+                size: self.parent.size[0],self.parent.size[1]
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+            Button:
+                id: start
+                text: 'Iniciar Analisis'
+                visible: False
+                size_hint_x: 0.25 if self.visible else 0
+                size_hint_y: 0.10
+                opacity: 1 if self.visible else 0
+                pos_hint: {'center_x': 0.75+0.25/2, 'y':0 }
+                on_press: root.start_detection()
